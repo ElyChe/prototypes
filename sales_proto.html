@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>План продаж</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Montserrat Font -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+    }
+  </style>
+</head>
+
+<body class="bg-light">
+
+  <!-- Bootstrap JS (optional) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+  <script src="./Navbar Template · Bootstrap v5.0_files/bootstrap.bundle.min.js"></script>
+
+<main>
+
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Eighth navbar example">
+    <div class="container">
+      <span class="navbar-brand my-1 h1">LOGO</span>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExample07">
+        <ul class="navbar-nav me-auto mb-0 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="https://getbootstrap.com/docs/5.0/examples/navbars/#">Создание заявки</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://getbootstrap.com/docs/5.0/examples/navbars/#">Список заявок</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://getbootstrap.com/docs/5.0/examples/navbars/#">Сервис</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav me-0 mb-0 mb-lg-0">
+         <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="https://getbootstrap.com/docs/5.0/examples/navbars/#" id="dropdown07" data-bs-toggle="dropdown" aria-expanded="false">UserName</a>
+            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end dropdown-menu-lg-end" aria-labelledby="dropdownMenuButton2">
+              <li><a class="dropdown-item active" href="https://getbootstrap.com/docs/5.0/examples/navbars/#">План продаж</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="https://getbootstrap.com/docs/5.0/examples/navbars/#">Изменить данные</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="https://getbootstrap.com/docs/5.0/examples/navbars/#">Справка</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="https://getbootstrap.com/docs/5.0/examples/navbars/#">Выйти</a></li>
+            </ul>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+
+<div class="d-grid p-4 gap-0 col-10 col-sm-6 col-md-5 col-lg-4 mx-auto">
+    <figure class="text-center align-items-center mb-0">
+        <h5 class="text-uppercase text-muted mb-0">План продаж</h5>
+    </figure>
+</div>
+
+    <div>
+      <div class="container">
+        <div class="bg-white p-5 rounded">
+          <div class="col-10 col-sm-8 col-md-6 col-lg-4 mx-auto">
+            <div class="d-grid gap-2 col-12 mx-auto">
+
+              <div class="mb-3 text-center">
+                <div><h6>По всем точкам продаж</h6></div>
+                <div><canvas id="totalChart" width="300" height="80"></canvas></div>
+              </div>
+
+              <div class="mb-3 text-center">
+                <div><h6>Точка продаж №1</h6></div>
+                <div><canvas id="pos1Chart" width="300" height="80"></canvas></div>
+              </div>
+
+              <div class="mb-3 text-center">
+                <div><h6>Точка продаж №2</h6></div>
+                <div><canvas id="pos2Chart" width="300" height="80"></canvas></div>
+              </div>
+
+              <div class="mb-3 text-center">
+                <div><h6>Точка продаж №3</h6></div>
+                <div><canvas id="pos3Chart" width="300" height="80"></canvas></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+        // Данные для графиков
+        var planSum = 2000000
+        var planDays = 30
+        var pos1Sales = [41481, 64822, 89702, 85965, 79971, 47950, 66153, 50833, 83525, 52579, 83319, 81918, 38506, 51197, 48309, 71730, 68242, 76791, 82115, 59822, 84656, 84971, 84738, 83094, 49443, 38515, 60160, 83590, 45594, 49252];
+        var pos2Sales = [370655, 274551, 269047, 443857, 293117, 270357, 251437, 306946, 411030, 419277, 421600, 294051, 384795, 274943, 275672, 408640, 383758, 235534, 295240, 262127, 222598, 384071, 385918, 306403, 325009, 425729, 415260, 251168, 421736, 246296];
+        var pos3Sales = [21481, 44822, 69702, 65965, 59971, 27950, 46153, 30833, 23525, 32579, 33319, 41918, 18506, 31197, 28309];
+
+        // Функция для обрезания или дополнения данных по продажам
+        function adjustSalesData(salesData, planDays) {
+            if (salesData.length > planDays) {
+                return salesData.slice(0, planDays);
+            } else {
+                return salesData.concat(Array(planDays - salesData.length).fill(0));
+            }
+        }
+
+        // Функция для суммирования значений по разным точкам продаж
+        function sumArrays(...arrays) {
+            if (arrays.length === 0) return [];
+
+            return arrays[0].map((_, index) => arrays.reduce((acc, curr) => acc + curr[index], 0));
+        }
+
+        // Функция для расчёта порога продаж
+        function calculateThreshold(salesData, planSum, planDays) {
+            let thresholds = [];
+            let cumulativeSales = 0;
+
+            for (let i = 0; i < planDays; i++) {
+                // Расчет порога для текущего дня
+                let dailyThreshold = (planSum - cumulativeSales) / (planDays - i);
+                
+                if (salesData[i] === 0) {
+                    // Если продажи в текущий день равны нулю,
+                    // то используем порог предыдущего дня с ненулевыми продажами
+                    thresholds.push(thresholds.length ? Math.max(thresholds[thresholds.length - 1], 0) : 0);
+                } else {
+                    // Рассчитываем порог для текущего дня
+                    dailyThreshold = Math.max(dailyThreshold, 0); // Исключаем отрицательное значение
+                    thresholds.push(dailyThreshold);
+                    cumulativeSales += salesData[i];
+                }
+            }
+
+            return thresholds;
+        }
+
+        // Функция для построения графика с динамическим порогом
+        function drawChart(canvasId, sales, thresholds) {
+            var canvas = document.getElementById(canvasId);
+            var ctx = canvas.getContext("2d");
+            var width = canvas.width;
+            var height = canvas.height;
+
+            ctx.clearRect(0, 0, width, height);
+
+            // Настройки графика
+            var barWidth = width / sales.length;
+
+            var maxSales = Math.max(...sales);
+            // var maxThresholds = Math.max(...thresholds);
+            var scaleFactor = height / maxSales;
+
+            // // Вычисляем максимальное значение как из массива продаж, так и из массива порогов
+            // var maxSalesAndThresholds = Math.max(...sales, ...thresholds);
+            // var scaleFactor = height / maxSalesAndThresholds;
+
+            // Рисуем столбцы продаж
+            for (var i = 0; i < sales.length; i++) {
+                var x = i * barWidth;
+                var barHeight = sales[i] * scaleFactor;
+
+                // Раскрашиваем столбцы в синий, если thresholds не передан
+                if (!thresholds || thresholds.length !== sales.length) {
+                    ctx.fillStyle = "#CBB3F2"; // Цвет столбца продаж
+                } else {
+                    // Раскрашиваем столбцы в соответствии с порогами
+                    ctx.fillStyle = sales[i] >= thresholds[i] ? "#56EBB6" : sales[i] >= thresholds[i] * 0.95 ? "#FFE68B" : "#FFD1D5";
+                }
+
+                // Рисуем столбец
+                ctx.fillRect(x, height - barHeight, barWidth, barHeight);
+            }
+
+            // Если переданы пороги, рисуем их
+            if (thresholds && thresholds.length === sales.length) {
+                for (var i = 0; i < sales.length; i++) {
+                    var x = i * barWidth;
+                    var y = height - thresholds[i] * scaleFactor; // Переводим порог в координаты холста
+
+                    // Рисуем линию порога
+                    ctx.strokeStyle = "#CE34DB"; // Цвет линии порога
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                    ctx.lineTo(x + barWidth, y);
+                    ctx.stroke();
+                }
+            }
+        }
+
+        // Применение функций
+
+        pos1Sales = adjustSalesData(pos1Sales, planDays)
+        pos2Sales = adjustSalesData(pos2Sales, planDays)
+        pos3Sales = adjustSalesData(pos3Sales, planDays)
+
+        var totalSales = sumArrays(pos1Sales, pos2Sales, pos3Sales);
+
+        var pos1Thresholds = calculateThreshold(pos1Sales, planSum, planDays);
+        var pos2Thresholds = calculateThreshold(pos2Sales, planSum, planDays);
+        var pos3Thresholds = calculateThreshold(pos3Sales, planSum, planDays);
+
+        // Вызываем функцию для построения графиков
+        drawChart("totalChart", totalSales);
+        drawChart("pos1Chart", pos1Sales, pos1Thresholds);
+        drawChart("pos2Chart", pos2Sales, pos2Thresholds);
+        drawChart("pos3Chart", pos3Sales, pos3Thresholds);
+
+    </script>
+
+</main>
+</body>
+</html>
